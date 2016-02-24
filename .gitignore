@@ -1,3 +1,4 @@
+/Prepare_to_HW0.patch
 .idea
 out
 target
@@ -6,3 +7,4 @@ log
 
 
 
+/.gitignore
