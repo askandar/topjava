@@ -24,7 +24,11 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
-        getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+
+
+        List<UserMealWithExceed> userMealWithExceeds = getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        System.out.println(userMealWithExceeds);
+
 //        .toLocalDate();
 //        .toLocalTime();
     }
@@ -40,10 +44,9 @@ public class UserMealsUtil {
                 .collect(Collectors.groupingBy(foo -> foo.getDateTime().getDayOfYear() + foo.getDateTime().getDayOfYear(), Collectors.summarizingInt(UserMeal::getCalories)))
                 .forEach((date,sum) -> map.put(date,sum.getSum()));
 
-        List<UserMealWithExceed> userMealWithExceeds = mealList
+        return mealList
                 .stream()
-                .filter(s -> s.getDateTime().getHour() > startTime.getHour() && s.getDateTime().getHour() < endTime.getHour())
-                .filter(m -> m.getCalories() < caloriesPerDay)
+                .filter(s -> TimeUtil.isBetween(s.getDateTime().toLocalTime(),startTime,endTime))
                 .map(userMeal ->
                         new UserMealWithExceed(
                                 userMeal.getDateTime(),
@@ -51,16 +54,6 @@ public class UserMealsUtil {
                                 userMeal.getCalories(),
                                 isExceeded(map.get(userMeal.getDateTime().getDayOfYear()+userMeal.getDateTime().getDayOfYear()),caloriesPerDay)))
                 .collect(Collectors.toList());
-
-
- /*       for (UserMealWithExceed userMealWithExceed : userMealWithExceeds) {
-            System.out.println("Time: " + userMealWithExceed.getDateTime() +
-                    "\tDescription: " + userMealWithExceed.getDescription() +
-                    "\tCalories: " + userMealWithExceed.getDescription() +
-                    "\tExceeded: "  + userMealWithExceed.isExceed());
-        }*/
-
-        return userMealWithExceeds;
     }
 
     private static boolean isExceeded(long day, int caloriesPerDay){
