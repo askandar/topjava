@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.util;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
@@ -35,28 +36,17 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed> getFilteredMealsWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
-
-        // TODO return filtered list with correctly exceeded field
-
-        Map<Integer, Long> map = new HashMap<>();
-
-        mealList.stream()
-                .collect(Collectors.groupingBy(foo -> foo.getDateTime().getDayOfYear() + foo.getDateTime().getDayOfYear(), Collectors.summarizingInt(UserMeal::getCalories)))
-                .forEach((date,sum) -> map.put(date,sum.getSum()));
+        Map<LocalDate,Integer> mapList = mealList.stream()
+                .collect(Collectors.groupingBy(t -> t.getDateTime().toLocalDate(),Collectors.summingInt(UserMeal::getCalories)));
 
         return mealList
                 .stream()
-                .filter(s -> TimeUtil.isBetween(s.getDateTime().toLocalTime(),startTime,endTime))
-                .map(userMeal ->
-                        new UserMealWithExceed(
-                                userMeal.getDateTime(),
-                                userMeal.getDescription(),
-                                userMeal.getCalories(),
-                                isExceeded(map.get(userMeal.getDateTime().getDayOfYear()+userMeal.getDateTime().getDayOfYear()),caloriesPerDay)))
+                .filter(userMeal1 -> TimeUtil.isBetween(userMeal1.getDateTime().toLocalTime(),startTime,endTime))
+                .map(userMeal1 -> new UserMealWithExceed(userMeal1.getDateTime()
+                        , userMeal1.getDescription()
+                        , userMeal1.getCalories()
+                        , (mapList.get(userMeal1.getDateTime().toLocalDate()) > caloriesPerDay)))
                 .collect(Collectors.toList());
     }
 
-    private static boolean isExceeded(long day, int caloriesPerDay){
-        return day > caloriesPerDay;
-    }
 }
