@@ -26,8 +26,9 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
 
-
         List<UserMealWithExceed> userMealWithExceeds = getFilteredMealsWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+
+
         System.out.println(userMealWithExceeds);
 
 //        .toLocalDate();
@@ -37,6 +38,7 @@ public class UserMealsUtil {
     public static List<UserMealWithExceed> getFilteredMealsWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
         Map<LocalDate, Integer> mapList = mealList.stream()
+                .parallel()
                 .collect(Collectors.groupingBy(t -> t.getDateTime().toLocalDate(), Collectors.summingInt(UserMeal::getCalories)));
 
         return mealList
