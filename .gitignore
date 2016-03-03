@@ -1,3 +1,4 @@
+/1-3-switch-to-war.patch
 /1-2-HW0-cycle.patch
 /1-1-HW0-stream.patch
 /Prepare_to_HW0.patch
@@ -6,7 +7,7 @@ out
 target
 *.iml
 log
-
+*.patch
 
 
 /.gitignore
