@@ -5,7 +5,7 @@ target
 *.iml
 log
 *.patch
-
+config
 
 /.gitignore
-/config
+
