@@ -13,6 +13,8 @@
     <title>Title</title>
 </head>
 <body>
+<div align="center">
+    <h2>Add/Edit Meal User</h2>
 <form method="post" action="mealList">
     <table>
         <tr>
@@ -38,5 +40,6 @@
     <button type="button" onclick="location.href='mealList'">Cancel</button>
 
 </form>
+</div>
 </body>
 </html>

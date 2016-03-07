@@ -20,7 +20,7 @@
 
 
     <c:if test="${not empty users }">
-        <table cellpadding="0" cellspacing="1" width="100%" border="1">
+        <table cellpadding="0" cellspacing="1" width="100%" border="1" align="center">
             <thead>
             <tr>
                 <th>Date Time</th>
@@ -29,7 +29,7 @@
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody align="center">
             <c:forEach items="${users}" var="user">
                 <tr style="border: 2px solid ${user.isExceed() ? 'red':'green'}">
                     <td>${user.getDateTime().toLocalDate()}  ${user.getDateTime().toLocalTime()}</td>
