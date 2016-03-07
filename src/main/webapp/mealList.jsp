@@ -31,10 +31,10 @@
             </thead>
             <tbody>
             <c:forEach items="${users}" var="user">
-                <tr style="border: 2px solid ${user.isExceed() ==true ? 'red':'green'}">
+                <tr style="border: 2px solid ${user.isExceed() ? 'red':'green'}">
+                    <td>${user.getDateTime().toLocalDate()}  ${user.getDateTime().toLocalTime()}</td>
                     <td>${user.getDescription()}</td>
                     <td>${user.getCalories()}</td>
-                    <td>${user.getDateTime().toLocalDate()}, ${user.getDateTime().toLocalTime()}</td>
                     <td><a  href="mealList?action=edit&userId=<c:out value="${user.getId()}"/>">Edit</a> | <a href="mealList?action=delete&userId=<c:out value="${user.getId()}"/>">Delete</a> </td>
                 </tr>
             </c:forEach>
