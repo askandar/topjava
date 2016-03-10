@@ -1,5 +1,6 @@
 <%@ page import="ru.javawebinar.topjava.model.UserMealWithExceed" %>
 <%@ page import="java.util.List" %>
+<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -31,11 +32,12 @@
             </thead>
             <tbody align="center">
             <c:forEach items="${users}" var="user">
-                <tr style="border: 2px solid ${user.isExceed() ? 'red':'green'}">
-                    <td>${user.getDateTime().toLocalDate()}  ${user.getDateTime().toLocalTime()}</td>
-                    <td>${user.getDescription()}</td>
-                    <td>${user.getCalories()}</td>
-                    <td><a  href="mealList?action=edit&userId=<c:out value="${user.getId()}"/>">Edit</a> | <a href="mealList?action=delete&userId=<c:out value="${user.getId()}"/>">Delete</a> </td>
+                <jsp:useBean id="user" scope="page" type="ru.javawebinar.topjava.model.UserMealWithExceed"/>
+                <tr style="border: 2px solid ${user.exceed ? 'red':'green'}">
+                    <td><%=TimeUtil.toString(user.getDateTime())%></td>
+                    <td>${user.description}</td>
+                    <td>${user.calories}</td>
+                    <td><a  href="mealList?action=edit&userId=<c:out value="${user.id}"/>">Edit</a> | <a href="mealList?action=delete&userId=<c:out value="${user.id}"/>">Delete</a> </td>
                 </tr>
             </c:forEach>
             </tbody>
