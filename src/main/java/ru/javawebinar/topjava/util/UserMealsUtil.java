@@ -65,14 +65,8 @@ public class UserMealsUtil{
 
         UserMeal userMeal1 = usersMap.findById(2l);
 
-       // usersMap.update();
         System.out.println("After Update");
         usersMap.findAll().forEach(System.out::println);
-
-        //System.out.println(Collections.max(usersMap));
-
-
-
 
     }
 

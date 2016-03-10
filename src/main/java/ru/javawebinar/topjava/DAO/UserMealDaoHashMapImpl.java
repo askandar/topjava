@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.DAO;
 import ru.javawebinar.topjava.model.UserMeal;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by askandar on 06.03.16.
@@ -10,7 +11,7 @@ import java.util.*;
 public class UserMealDaoHashMapImpl implements UserMealDao {
 
 
-    private Map<Long,UserMeal> mapUserMeals = new HashMap<>();
+    private Map<Long,UserMeal> mapUserMeals = new ConcurrentHashMap<>();
 
     @Override
     public synchronized List<UserMeal> findAll() {
