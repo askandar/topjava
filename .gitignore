@@ -2,9 +2,12 @@
 .idea
 out
 target
+/description.md
+/cv.md
 *.iml
 log
 *.patch
+/README.md
 config
 
 /.gitignore
