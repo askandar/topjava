@@ -1,8 +1,11 @@
 package ru.javawebinar.topjava.repository.mock;
 
+import ru.javawebinar.topjava.LoggedUser;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 import ru.javawebinar.topjava.util.UserMealsUtil;
+import ru.javawebinar.topjava.util.exception.ExceptionUtil;
 
 import java.util.Collection;
 import java.util.Map;
@@ -15,18 +18,32 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class InMemoryUserMealRepositoryImpl implements UserMealRepository {
     private Map<Integer, UserMeal> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(0);
+    //private AtomicInteger counter = new AtomicInteger(0);
 
     {
         UserMealsUtil.MEAL_LIST.forEach(this::save);
     }
 
-    @Override
+
+/*    @Override
     public UserMeal save(UserMeal userMeal) {
         if (userMeal.isNew()) {
             userMeal.setId(counter.incrementAndGet());
         }
         repository.put(userMeal.getId(), userMeal);
+        return userMeal;
+    }*/
+
+
+    @Override
+    public UserMeal save(UserMeal userMeal) {
+        if (userMeal.isNew()) {
+            userMeal.setId(LoggedUser.id());
+        }else if (userMeal.getId() == LoggedUser.id()) {
+            repository.put(userMeal.getId(), userMeal);
+        }else {
+            ExceptionUtil.check(false,"User not access");
+        }
         return userMeal;
     }
 

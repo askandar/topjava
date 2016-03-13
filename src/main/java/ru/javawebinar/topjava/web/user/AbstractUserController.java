@@ -3,6 +3,8 @@ package ru.javawebinar.topjava.web.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import ru.javawebinar.topjava.LoggedUser;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 
@@ -28,7 +30,7 @@ public abstract class AbstractUserController {
     }
 
     public User create(User user) {
-        user.setId(null);
+        user.setId(LoggedUser.id());
         LOG.info("create " + user);
         return service.save(user);
     }
