@@ -20,10 +20,25 @@
     <h2><a href="index.html">Home</a></h2>
     <h3>Meal list</h3>
     <form id="filter" method="get">
-        <label>From Date:</label><input name="fromDate" type="date"  value="2015-01-01"/> <label>To Date:</label><input name="toDate" type="date" value="2016-01-01"/>
+        <%
+            String fromDate = (String)request.getAttribute("fromDate");
+            String toDate = (String)request.getAttribute("toDate");
+            String fromTime = (String)request.getAttribute("fromTime");
+            String toTime = (String)request.getAttribute("toTime");
+           if (fromDate == "" | fromDate == null ) {
+               fromDate = "2015-01-01";
+               toDate = "2016-01-01";
+               fromTime = "00:00";
+               toTime = "23:59";
+           }
+
+
+        %>
+
+        <label>From Date:</label><input name="fromDate" type="date" value="<%=fromDate%>"/> <label>To Date:</label><input name="toDate" type="date" value="<%=toDate%>"/>
         <br />
         <br />
-        <label>From Time:</label><input name="fromTime" type="time" value="00:00"/> <label>To Time:</label><input name="toTime" type="time" value="23:59" />
+        <label>From Time:</label><input name="fromTime" type="time" value="<%=fromTime%>" /> <label>To Time:</label><input name="toTime" type="time" value="<%=toTime%>" />
         <br />
         <br />
         <button type="submit" >Filter</button>

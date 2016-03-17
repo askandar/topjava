@@ -72,6 +72,10 @@ public class MealServlet extends HttpServlet {
                 String toDate = request.getParameter("toDate");
                 String fromTime = request.getParameter("fromTime");
                 String toTime = request.getParameter("toTime");
+                request.setAttribute("fromDate",fromDate);
+                request.setAttribute("toDate", toDate);
+                request.setAttribute("fromTime", fromTime);
+                request.setAttribute("toTime", toTime);
                 System.out.println(fromDate + " " + fromTime);
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 LocalDateTime startLt =  LocalDateTime.parse(fromDate + " " + fromTime, formatter);
