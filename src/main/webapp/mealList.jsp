@@ -19,6 +19,16 @@
 <section>
     <h2><a href="index.html">Home</a></h2>
     <h3>Meal list</h3>
+    <form id="filter" method="get">
+        <label>From Date:</label><input name="fromDate" type="date"  value="2015-01-01"/> <label>To Date:</label><input name="toDate" type="date" value="2016-01-01"/>
+        <br />
+        <br />
+        <label>From Time:</label><input name="fromTime" type="time" value="00:00"/> <label>To Time:</label><input name="toTime" type="time" value="23:59" />
+        <br />
+        <br />
+        <button type="submit" >Filter</button>
+    </form>
+
     <a href="meals?action=create">Add Meal</a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">

@@ -30,7 +30,7 @@ public abstract class AbstractUserController {
     }
 
     public User create(User user) {
-        user.setId(LoggedUser.id());
+        user.setId(user.getId());
         LOG.info("create " + user);
         return service.save(user);
     }

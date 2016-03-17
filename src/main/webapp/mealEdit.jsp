@@ -29,6 +29,7 @@
     <h3>Edit meal</h3>
     <hr>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.UserMeal" scope="request"/>
+
     <form method="post" action="meals">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>

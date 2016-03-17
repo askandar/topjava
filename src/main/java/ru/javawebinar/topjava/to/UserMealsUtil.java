@@ -1,7 +1,8 @@
-package ru.javawebinar.topjava.util;
+package ru.javawebinar.topjava.to;
 
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.model.UserMealWithExceed;
+import ru.javawebinar.topjava.util.TimeUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,6 +47,19 @@ public class UserMealsUtil {
 
         return mealList.stream()
                 .filter(um -> TimeUtil.isBetween(um.getDateTime().toLocalTime(), startTime, endTime))
+                .map(um -> createWithExceed(um, caloriesSumByDate.get(um.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
+    }
+
+    public static List<UserMealWithExceed> getFilteredWithExceeded(Collection<UserMeal> mealList, LocalDateTime startTime, LocalDateTime endTime, int caloriesPerDay) {
+        Map<LocalDate, Integer> caloriesSumByDate = mealList.stream()
+                .collect(
+                        Collectors.groupingBy(um -> um.getDateTime().toLocalDate(),
+                                Collectors.summingInt(UserMeal::getCalories))
+                );
+
+        return mealList.stream()
+                .filter(um -> TimeUtil.isBetween(um.getDateTime(), startTime, endTime))
                 .map(um -> createWithExceed(um, caloriesSumByDate.get(um.getDateTime().toLocalDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }

@@ -18,6 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 
+    @Qualifier("inMemoryUserRepositoryImpl")
     @Autowired
     private UserRepository repository;
 

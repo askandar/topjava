@@ -4,10 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,19 +12,20 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by askandar on 13.03.16.
  */
 
-/*@Repository*/
+@Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
 
     private AtomicInteger counter = new AtomicInteger(0);
 
+    List<Integer> mealList = new ArrayList<>();
 
     @Override
     public User save(User user) {
-        if (user.isNew()){
+/*        if (user.isNew()){
             user.setId(counter.getAndIncrement());
-        }
+        }*/
         repository.put(user.getId(),user);
         return user;
     }
@@ -45,12 +43,19 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        User user = null;
+        for (Map.Entry<Integer, User> entry : repository.entrySet()) {
+            if (entry.getValue().getEmail().equalsIgnoreCase(email)){
+                user = entry.getValue();
+                break;
+            }
+        }
+        return user;
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return new ArrayList<User>(repository.values());
     }
 
 }

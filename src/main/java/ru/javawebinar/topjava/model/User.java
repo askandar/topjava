@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava.model;
 
-import ru.javawebinar.topjava.util.UserMealsUtil;
+import ru.javawebinar.topjava.to.UserMealsUtil;
 
 import java.util.Date;
 import java.util.EnumSet;
