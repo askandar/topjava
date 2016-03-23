@@ -1,24 +1,16 @@
 package ru.javawebinar.topjava;
 
 import ru.javawebinar.topjava.matcher.ModelMatcher;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.model.UserMeal;
-import ru.javawebinar.topjava.util.TimeUtil;
-import ru.javawebinar.topjava.util.UserMealsUtil;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
-import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
-import static ru.javawebinar.topjava.UserTestData.USER_ID;
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
+
 
 /**
  * GKislin
@@ -30,15 +22,52 @@ public class MealTestData {
     public static final int ADMIN_ID = START_SEQ + 1;
 
 
-    private Map<Integer, Map<Integer,UserMeal>> repository = new ConcurrentHashMap<>();
-    Map<Integer,UserMeal> userMealMap = new ConcurrentHashMap<>();
+    private static Map<Integer, Map<Integer,UserMeal>> repository = new ConcurrentHashMap<>();
+    private static Map<Integer,UserMeal> userMealMap = new ConcurrentHashMap<>();
 
-    {
+    static {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        userMealMap.put(100002,new UserMeal(LocalDateTime.parse("2016-03-22 10:00", formatter),"Завтрак",500));
-        userMealMap.put(100002,new UserMeal(LocalDateTime.parse("2016-03-22 10:00", formatter),"Обед",1000));
-        userMealMap.put(100002,new UserMeal(LocalDateTime.parse("2016-03-22 10:00", formatter),"Ужин",550));
+        userMealMap.put(100002,new UserMeal(100002, LocalDateTime.parse("2016-03-22 10:00", formatter),"Завтрак",500));
+        userMealMap.put(100003,new UserMeal(100003,LocalDateTime.parse("2016-03-22 13:00", formatter),"Обед",1000));
+        userMealMap.put(100004,new UserMeal(100004,LocalDateTime.parse("2016-03-22 20:00", formatter),"Ужин",550));
         repository.put(USER_ID,userMealMap);
+
+    }
+
+
+    /*public static class TestMealUser extends UserMeal{
+
+        public TestMealUser(LocalDateTime dateTime, String description, int calories) {
+            super(dateTime, description, calories);
+        }
+
+        public TestMealUser(Integer id, LocalDateTime dateTime, String description, int calories) {
+            super(id, dateTime, description, calories);
+        }
+
+        @Override
+        public String toString() {
+            return "UserMeal{" +
+                    "id=" + getId() +
+                    ", dateTime=" + dateTime +
+                    ", description='" + description + '\'' +
+                    ", calories=" + calories +
+                    '}';
+        }
+
+    }*/
+
+    public static UserMeal getById(int id, int user_id){
+        return repository.get(user_id).get(id);
+    }
+
+    public static Collection<UserMeal> getAll(int user_id){
+
+        Comparator<UserMeal> comparator = Comparator.comparing(UserMeal::getDateTime);
+        return repository.get(USER_ID).values()
+                .stream().sorted((e2,e1) -> e1.getDateTime()
+                        .compareTo(e2.getDateTime()))
+                .collect(Collectors.toList());
 
     }
 
