@@ -1,6 +1,7 @@
-DROP TABLE IF EXISTS user_roles CASCADE ;
+DROP TABLE IF EXISTS user_roles CASCADE ;https://job-jira.otr.ru/browse/EXP-6866
 DROP TABLE IF EXISTS users CASCADE ;
 DROP TABLE IF EXISTS meals CASCADE ;
+DROP INDEX idx_meals_id;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START 100000;
@@ -34,12 +35,14 @@ CREATE TABLE meals(
   FOREIGN KEY (user_id) REFERENCES users(id) on DELETE CASCADE
 );
 
+CREATE INDEX idx_meals_id ON meals(user_id,dateTime);
+
 /*
 DROP INDEX idx_meals_id;
 DROP INDEX idx_meals_user_id;
 DROP INDEX idx_meals_date;
 
-CREATE INDEX idx_meals_id ON meals(id,user_id,dateTime);
+CREATE INDEX idx_meals_id ON meals(user_id,dateTime);
 CREATE INDEX idx_meals_user_id ON meals(user_id);
 CREATE INDEX idx_meals_date ON meals(dateTime);
 

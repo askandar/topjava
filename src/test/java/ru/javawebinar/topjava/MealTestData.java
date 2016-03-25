@@ -35,27 +35,6 @@ public class MealTestData {
     }
 
 
-    /*public static class TestMealUser extends UserMeal{
-
-        public TestMealUser(LocalDateTime dateTime, String description, int calories) {
-            super(dateTime, description, calories);
-        }
-
-        public TestMealUser(Integer id, LocalDateTime dateTime, String description, int calories) {
-            super(id, dateTime, description, calories);
-        }
-
-        @Override
-        public String toString() {
-            return "UserMeal{" +
-                    "id=" + getId() +
-                    ", dateTime=" + dateTime +
-                    ", description='" + description + '\'' +
-                    ", calories=" + calories +
-                    '}';
-        }
-
-    }*/
 
     public static UserMeal getById(int id, int user_id){
         return repository.get(user_id).get(id);
@@ -74,9 +53,3 @@ public class MealTestData {
     public static final ModelMatcher<UserMeal, String> MATCHER = new ModelMatcher<>(UserMeal::toString);
 
 }
-
-/*
-  (100000,'2016-03-22 10:00', 'Завтрак', 500),
-  (100000,'2016-03-22 13:00', 'Обед', 1000),
-  (100000,'2016-03-22 20:00','Ужин', 550)
- */
