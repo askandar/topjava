@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
@@ -41,6 +42,7 @@ public class UserMealServiceImpl implements UserMealService {
 
     @Override
     public UserMeal update(UserMeal meal, int userId) {
+
         return ExceptionUtil.check(repository.save(meal, userId), meal.getId());
     }
 
