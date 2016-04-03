@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.repository.jpa;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
@@ -29,15 +30,11 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
         User ref = em.getReference(User.class,userId);
         userMeal.setUser(ref);
         if (userMeal.isNew()){
-
             em.persist(userMeal);
-            em.flush();
-            return userMeal;
-        }else{
-
+        }else {
+            if (get(userMeal.getId(), userId) == null)
+                return null;
             em.merge(userMeal);
-            em.flush();
-
         }
 
         return userMeal;
@@ -46,22 +43,28 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
     @Override
     @Transactional
     public boolean delete(int id, int userId) {
-        return em.createNamedQuery(UserMeal.DELETE).setParameter("id",id).executeUpdate() != 0;
+        return em.createNamedQuery(UserMeal.DELETE)
+                .setParameter("id",id)
+                .setParameter("user_id",userId)
+                .executeUpdate() != 0;
     }
 
     @Override
     public UserMeal get(int id, int userId) {
-        try {
-            return em.createNamedQuery(UserMeal.GET_BY_ID, UserMeal.class).setParameter("id",id).setParameter("user_id",userId).getSingleResult();
-        } catch (Exception e) {
 
-        }
-        return null;
+        List<UserMeal> userMeals = em.createNamedQuery(UserMeal.GET_BY_ID, UserMeal.class)
+                    .setParameter("id",id)
+                    .setParameter("user_id",userId)
+                    .getResultList();
+        return userMeals.size() == 0 ? null : DataAccessUtils.requiredSingleResult(userMeals);
+
     }
 
     @Override
             public List<UserMeal> getAll(int userId) {
-                return em.createNamedQuery(UserMeal.ALL_SORTED,UserMeal.class).setParameter("user_id",userId).getResultList();
+                return em.createNamedQuery(UserMeal.ALL_SORTED,UserMeal.class)
+                        .setParameter("user_id",userId)
+                        .getResultList();
     }
 
     @Override

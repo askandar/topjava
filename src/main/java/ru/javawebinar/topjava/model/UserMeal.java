@@ -13,7 +13,7 @@ import java.util.Date;
  * 11.01.2015.
  */
 @NamedQueries({
-        @NamedQuery(name = UserMeal.DELETE, query = "DELETE FROM UserMeal m WHERE m.id = :id" ),
+        @NamedQuery(name = UserMeal.DELETE, query = "DELETE FROM UserMeal m WHERE m.id = :id and m.user.id = :user_id" ),
         @NamedQuery(name = UserMeal.ALL_SORTED, query = "SELECT m from UserMeal m  where m.user.id = :user_id order by m.dateTime desc "),
         @NamedQuery(name = UserMeal.GET_BY_ID, query = "select m from UserMeal m where m.id = :id and m.user.id = :user_id"),
         @NamedQuery(name = UserMeal.GET_FILTERED, query =
