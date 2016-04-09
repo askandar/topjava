@@ -29,7 +29,6 @@ public class JpaUserMealRepositoryImpl implements UserMealRepository {
     public UserMeal save(UserMeal userMeal, int userId) {
         User ref = em.getReference(User.class, userId);
         userMeal.setUser(ref);
-
         if (userMeal.isNew()) {
             em.persist(userMeal);
             return userMeal;
