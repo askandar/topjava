@@ -84,6 +84,7 @@ public class User extends NamedEntity {
         this.roles = roles;
     }
 
+
     public String getEmail() {
         return email;
     }
