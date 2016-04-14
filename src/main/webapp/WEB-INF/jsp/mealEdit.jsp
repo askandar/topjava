@@ -2,11 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-<head>
+<jsp:include page="fragments/headTag.jsp"/>
+<%--<head>
     <title>Meal</title>
     <link rel="stylesheet" href="css/style.css">
-</head>
+</head>--%>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h2><a href="">Home</a></h2>
     <h3>Edit meal</h3>
@@ -30,5 +32,6 @@
         <button onclick="window.history.back()">Cancel</button>
     </form>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

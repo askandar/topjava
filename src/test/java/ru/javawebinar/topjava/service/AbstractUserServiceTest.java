@@ -27,7 +27,7 @@ abstract public class AbstractUserServiceTest extends AbstractServiceTest {
     @Before
     public void setUp() throws Exception {
         service.evictCache();
-        jpaUtil.clear2ndLevelHibernateCache();
+        //jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
