@@ -61,6 +61,7 @@ public class User extends NamedEntity {
 
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("dateTime DESC")
+//    @JsonIgnore
     protected List<UserMeal> meals;
 
     public User() {
@@ -80,7 +81,7 @@ public class User extends NamedEntity {
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
         this.enabled = enabled;
-        this.roles = roles;
+        this.roles = EnumSet.copyOf(roles);
     }
 
     public String getEmail() {
