@@ -24,7 +24,16 @@ function deleteRow(id) {
     });
 }
 
-function updateTable() {
+
+function updateTableByData(data){
+    oTable_datatable.fnClearTable();
+    $.each(data, function(key, item){
+       oTable_datatable.fnAddData(item);
+    });
+    oTable_datatable.fnDraw();
+}
+
+/*function updateTable() {
     $.get(ajaxUrl, function (data) {
         datatableApi.fnClearTable();
         $.each(data, function (key, item) {
@@ -32,7 +41,7 @@ function updateTable() {
         });
         datatableApi.fnDraw();
     });
-}
+}*/
 
 function save() {
     var form = $('#detailsForm');

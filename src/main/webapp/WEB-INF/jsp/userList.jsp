@@ -109,6 +109,12 @@
     var ajaxUrl = 'ajax/admin/users/';
     var datatableApi;
 
+    function updateTable(){
+        $.get(ajaxUrl, function(data){
+           updateTableByData(data);
+        });
+    }
+
     // $(document).ready(function () {
     $(function () {
         datatableApi = $('#datatable').dataTable({
@@ -131,11 +137,11 @@
                     "mData": "registered"
                 },
                 {
-                    "sDefaultContent": "",
+                    "sDefaultContent": "Edit",
                     "bSortable": false
                 },
                 {
-                    "sDefaultContent": "",
+                    "sDefaultContent": "Delete",
                     "bSortable": false
                 }
             ],
@@ -146,6 +152,7 @@
                 ]
             ]
         });
+        oTable_datatable.dataTable(oTable_datatable_params);
         makeEditable();
     });
 </script>
