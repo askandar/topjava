@@ -22,7 +22,9 @@ function add() {
 function updateRow(id) {
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find("input[name='" + key + "']").val(
+                key === "dateTime" ? value.replace('T', ' ').substr(0, 16) : value
+            );
         });
         $('#editRow').modal();
     });
@@ -91,7 +93,7 @@ function successNoty(text) {
 function failNoty(event, jqXHR, options, jsExc) {
     closeNoty();
     failedNote = noty({
-        text: 'Failed: ' + jqXHR.statusText + "<br>",
+        text: 'Failed: ' + jqXHR.statusText + "<br>" + jqXHR.responseJSON,
         type: 'error',
         layout: 'bottomRight'
     });
